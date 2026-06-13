@@ -1,6 +1,5 @@
+// ✅ Sandi sudah sesuai permintaan
 const SANDI_ADMIN = "rahmanaulia180602002";
-
-// Ambil dan simpan data terpusat
 const DATA_KEY = "aeroPlaneData";
 
 function cekSandi() {
@@ -93,6 +92,7 @@ function tampilkanData() {
     });
 }
 
+// Fungsi pengelolaan
 function tambahSaldo(user) {
     const jml = parseInt(document.getElementById(`tambah-${user}`).value);
     if (!jml || jml <= 0) return alert("Masukkan jumlah yang benar!");
@@ -106,7 +106,7 @@ function setujui(id) {
     const tr = data.transaksi.find(t => t.id === id);
     tr.status = "disetujui";
     const akun = data.users.find(u => u.username === tr.username);
-    akun.investasi.push({ jumlah: tr.jumlah, waktuMulai: new Date().toISOString(), selesai: false });
+    akun.saldo += tr.jumlah;
     simpanData();
     alert("✅ Transaksi disetujui!");
 }
@@ -126,7 +126,8 @@ function prosesTarik(id) {
 function tolakTarik(id) {
     const tr = data.penarikan.find(t => t.id === id);
     tr.status = "ditolak";
-    data.users.find(u => u.username === tr.username).saldo += tr.jumlah;
+    const akun = data.users.find(u => u.username === tr.username);
+    akun.saldo += tr.jumlah;
     simpanData();
     alert("❌ Penarikan ditolak, saldo dikembalikan!");
 }
